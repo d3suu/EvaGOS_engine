@@ -4,8 +4,23 @@ Section title
 ## `;<text>`
 Comment
 
+## `＃<file>`
+Execute file <file>
+ 
+## `＊<name>`
+Function (goto point) definition
+
 ## `%s=<scene>`
 Show scene with <scene> sceneID
+ 
+## `%system`
+Show system options screen (Save files, screen resolution, exit)
+
+## `%select`
+ - `%cmnd.delete` - I don't know, but execute before spawning menu
+ - `%select.clear` - Clear menu options
+ - `%select.set=<function_to_call>,<show_name>` - Add new entry in menu, after click goto function
+ - `%select.wait` - Wait for user input (click), then close
 
 ## `%timer`
  - `%timer.start` - start timer
@@ -61,4 +76,64 @@ Play sound <id>
 
 %timer.wait=282
 %selSpeed.DeleteAll
+```
+
+## Shaking
+```
+; Asuka kick scene
+%selSpeed.Create=C009B
+%qblack
+
+○ミサトのマンション・ベランダ（夜）
+
+;アスカの蹴りがシンジの顔面に決まる。
+;ぶれ設定
+
+%selSpeed.Bure.Timer=3
+%selSpeed.Bure.Number=0
+%selSpeed.Bure.Set=740,400,0,30
+%selSpeed.Bure.Mode=0
+%selSpeed.Bure.Count=60
+
+%timer.wait=238
+%face=4,アスカ
+アスカ「$a11010 Vielen Dank!」1
+
+%sound.play=009b
+%timer.start
+
+%selSpeed.Bure
+%selSpeed.Draw
+%faceclose=4
+```
+
+## Menu
+```
+; From AI00.sjs - First menu
+
+＊始まり始まり
+
+;----------------
+;0=General MIDI Reset.
+%midi.play=0
+
+☆初めのセーブポイント
+
+%cmnd.delete
+
+%select.clear
+%select.set=ゲームを始める,Startgame
+%select.set=システム,Options
+%select.wait
+
+＊システム
+%system
+goto 始まり始まり
+
+＊ゲームを始める
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;＃test001.txt
+
+＃ava011.txt
 ```
